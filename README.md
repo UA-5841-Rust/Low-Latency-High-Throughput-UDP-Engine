@@ -1,4 +1,15 @@
-# Practical Assignment: Building a High-Throughput Low-Latency UDP Engine in Rust
+# Topics:
+* Building projects (GCC/Clang, Makefiles).
+* Debugging with `gdb`.
+* Performance profiling (`perf`, `gprof`, `Hotspot`).
+* Binding to CPU cores (`taskset`, `isolcpus`) and NUMA architecture.
+
+
+# Practical task 1:
+* Write a high-load UDP server in Rust/C.
+* Perform load profiling using `perf record`, build a FlameGraph in `Hotspot`, and optimize the server by binding threads to isolated cores (`taskset`).
+
+# Practical task 2: Building a High-Throughput Low-Latency UDP Engine in Rust
 
 **Topic:** Low-level network stack optimization, Linux system calls, Zero-Allocation, Lock-Free architecture, and system profiling.
 
