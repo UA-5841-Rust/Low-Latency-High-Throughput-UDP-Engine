@@ -1,5 +1,7 @@
-use crate::{net, worker};
+use crate::{net, worker, ring_buffer::SpscRingBuffer};
 use std::net::SocketAddr;
+use std::sync::Arc;
+use std::thread;
 
 pub struct UdpEngine {
     bind_addr: SocketAddr,
@@ -18,21 +20,40 @@ impl UdpEngine {
 
         let mut handles = vec![];
 
-        for (id, core_id) in core_ids.into_iter().enumerate() {
-            let bind_addr = self.bind_addr;
-
-            // Initialize a dedicated socket per worker
-            let socket = net::bind_reuseport_socket(bind_addr)
-                .expect("Failed to create SO_REUSEPORT socket");
-
-            println!("Worker {} attached to core {} by it's own socket", id, core_id.id);
-
-            // Spawn the worker thread directly
-            let handle = worker::start_worker(id, core_id, socket);
-            handles.push(handle);
+        if core_ids.len() < 2 {
+            panic!("Lock-free required at least 2 CPU cores");
         }
 
-        // Await all threads to prevent early termination
+        let rx_core = core_ids[0];
+        let tx_core = core_ids[1];
+
+        let ring_buffer = Arc::new(SpscRingBuffer::<worker::Packet, 8192>::new());
+
+        let consumer_buffer = Arc::clone(&ring_buffer);
+        let consumer_handle = thread::spawn(move || {
+            core_affinity::set_for_current(tx_core);
+            println!("Consumer attached to core {}", tx_core.id);
+            
+            let mut processed = 0u64;
+            loop {
+                if let Some(_packet) = consumer_buffer.pop() {
+                    processed += 1;
+                    if processed % 5_000_000 == 0 {
+                        println!("Consumer processed {} millions packets", processed / 1_000_000);
+                    }
+                }
+            }
+        });
+        handles.push(consumer_handle);
+
+        let bind_addr = self.bind_addr;
+        let socket = net::bind_reuseport_socket(bind_addr)
+            .expect("Failed to create SO_REUSEPORT socket");
+        
+        println!("Receiver attached to core {}", rx_core.id);
+        let producer_handle = worker::start_worker(0, rx_core, socket, ring_buffer);
+        handles.push(producer_handle);
+
         for handle in handles {
              handle.join().unwrap();
         }

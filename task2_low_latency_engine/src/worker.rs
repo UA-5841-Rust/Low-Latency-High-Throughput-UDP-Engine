@@ -2,10 +2,19 @@ use core_affinity::CoreId;
 use std::net::UdpSocket;
 use std::os::unix::io::AsRawFd;
 use std::ptr;
+use std::sync::Arc;
 use std::thread::{self, JoinHandle};
+use crate::ring_buffer::SpscRingBuffer;
 
 const BATCH_SIZE: usize = 32;
 const BUF_SIZE: usize = 1024;
+
+#[repr(align(64))]
+#[derive(Clone, Copy)]
+pub struct Packet {
+    pub len: usize,
+    pub data: [u8; BUF_SIZE],
+}
 
 // Align memory to cache line boundaries to prevent false sharing
 #[repr(align(64))]
@@ -15,6 +24,7 @@ pub fn start_worker(
     worker_id: usize,
     core_id: CoreId,
     socket: UdpSocket,
+    ring_buffer: Arc<SpscRingBuffer<Packet, 8192>>,
 ) -> JoinHandle<()> {
     thread::spawn(move || {
         // Pin thread to a specific CPU core
@@ -40,8 +50,6 @@ pub fn start_worker(
             msgs[i].msg_hdr.msg_iovlen = 1;
         }
 
-        let mut packet_count = 0u64;
-
         // Hot path: process incoming packets
         loop {
             // Batch read packets via system call
@@ -56,11 +64,14 @@ pub fn start_worker(
             };
 
             if pkts_received > 0 {
-                packet_count += pkts_received as u64;
-
-                // Log performance metrics
-                if packet_count % 5_000_000 < (pkts_received as u64) {
-                    println!("Worker {} processed {} millions packets", worker_id, packet_count / 1_000_000);
+                for i in 0..pkts_received {
+                    let len = msgs[i as usize].msg_len as usize;
+                    let mut pkt = Packet { len, data: [0; BUF_SIZE] };
+                    
+                    // L1 cache layer
+                    pkt.data[..len].copy_from_slice(&buffers[i as usize].0[..len]);
+                    
+                    let _ = ring_buffer.push(pkt);
                 }
             } else if pkts_received < 0 {
                 let err = std::io::Error::last_os_error();
