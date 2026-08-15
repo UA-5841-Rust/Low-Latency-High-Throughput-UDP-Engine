@@ -1,5 +1,4 @@
 use crate::worker;
-use core_affinity::CoreId;
 use std::net::UdpSocket;
 use std::sync::Arc; 
 
