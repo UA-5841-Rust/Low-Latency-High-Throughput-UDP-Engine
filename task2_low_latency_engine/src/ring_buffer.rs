@@ -10,14 +10,18 @@ pub struct SpscRingBuffer<T, const N: usize> {
     tail: CacheAligned<AtomicUsize>,
 
     // UnsafeCell allows interior mutability for buffer slots
-    buffer: [UnsafeCell<Option<T>>; N],
+    buffer: Vec<UnsafeCell<Option<T>>>,
 }
 
 unsafe impl<T: Send, const N: usize> Sync for SpscRingBuffer<T, N> {}
 
 impl<T, const N: usize> SpscRingBuffer<T, N> {
     pub fn new() -> Self {
-        let buffer = std::array::from_fn(|_| UnsafeCell::new(None));
+        let mut buffer = Vec::with_capacity(N);
+        for _ in 0..N {
+            buffer.push(UnsafeCell::new(None));
+        }
+        
         Self{
             head: CacheAligned(AtomicUsize::new(0)),
             tail: CacheAligned(AtomicUsize::new(0)),
