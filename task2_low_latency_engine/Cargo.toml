@@ -1,0 +1,8 @@
+[package]
+name = "task2_low_latency_engine"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+core_affinity = "0.8.3"
+socket2 = { version = "0.6.5", features = ["all"] }
