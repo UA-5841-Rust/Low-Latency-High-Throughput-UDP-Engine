@@ -1,6 +1,5 @@
-use crate::net;
+use crate::{net, worker};
 use std::net::SocketAddr;
-use std::thread;
 
 pub struct UdpEngine {
     bind_addr: SocketAddr,
@@ -22,18 +21,18 @@ impl UdpEngine {
         for (id, core_id) in core_ids.into_iter().enumerate() {
             let bind_addr = self.bind_addr;
 
-            let handle = thread::spawn(move || {
-                core_affinity::set_for_current(core_id);
+            // Initialize a dedicated socket per worker
+            let socket = net::bind_reuseport_socket(bind_addr)
+                .expect("Failed to create SO_REUSEPORT socket");
 
-                let _socket = net::bind_reuseport_socket(bind_addr).expect("Failed to create SO_REUSEPORT socket");
+            println!("Worker {} attached to core {} by it's own socket", id, core_id.id);
 
-                println!("Worker {} attached to core {} by it's own socket", id, core_id.id);
-
-                thread::park();
-            });
+            // Spawn the worker thread directly
+            let handle = worker::start_worker(id, core_id, socket);
             handles.push(handle);
         }
 
+        // Await all threads to prevent early termination
         for handle in handles {
              handle.join().unwrap();
         }
