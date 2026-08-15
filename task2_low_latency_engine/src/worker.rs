@@ -1,10 +1,10 @@
+use crate::ring_buffer::SpscRingBuffer;
 use core_affinity::CoreId;
 use std::net::UdpSocket;
 use std::os::unix::io::AsRawFd;
 use std::ptr;
 use std::sync::Arc;
 use std::thread::{self, JoinHandle};
-use crate::ring_buffer::SpscRingBuffer;
 
 const BATCH_SIZE: usize = 32;
 const BUF_SIZE: usize = 1024;
@@ -38,8 +38,8 @@ pub fn start_worker(
             .collect();
 
         // Initialize C structures for libc
-        let mut iovecs: [libc::iovec; BATCH_SIZE] = unsafe {std::mem::zeroed()};
-        let mut msgs: [libc::mmsghdr; BATCH_SIZE] = unsafe {std::mem::zeroed()};
+        let mut iovecs: [libc::iovec; BATCH_SIZE] = unsafe { std::mem::zeroed() };
+        let mut msgs: [libc::mmsghdr; BATCH_SIZE] = unsafe { std::mem::zeroed() };
 
         // Map C structures to the pre-allocated Rust buffers
         for i in 0..BATCH_SIZE {
@@ -54,23 +54,20 @@ pub fn start_worker(
         loop {
             // Batch read packets via system call
             let pkts_received = unsafe {
-                libc::recvmmsg(
-                    fd, 
-                    msgs.as_mut_ptr(),
-                    BATCH_SIZE as u32,
-                    0,
-                    ptr::null_mut(),
-                )
+                libc::recvmmsg(fd, msgs.as_mut_ptr(), BATCH_SIZE as u32, 0, ptr::null_mut())
             };
 
             if pkts_received > 0 {
                 for i in 0..pkts_received {
                     let len = msgs[i as usize].msg_len as usize;
-                    let mut pkt = Packet { len, data: [0; BUF_SIZE] };
-                    
+                    let mut pkt = Packet {
+                        len,
+                        data: [0; BUF_SIZE],
+                    };
+
                     // L1 cache layer
                     pkt.data[..len].copy_from_slice(&buffers[i as usize].0[..len]);
-                    
+
                     let _ = ring_buffer.push(pkt);
                 }
             } else if pkts_received < 0 {

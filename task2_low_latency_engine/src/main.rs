@@ -1,4 +1,4 @@
-mod net; 
+mod net;
 pub mod ring_buffer;
 mod server;
 pub mod worker;

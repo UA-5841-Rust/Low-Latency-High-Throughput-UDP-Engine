@@ -1,4 +1,4 @@
-use crate::{net, worker, ring_buffer::SpscRingBuffer};
+use crate::{net, ring_buffer::SpscRingBuffer, worker};
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::thread;
@@ -9,7 +9,9 @@ pub struct UdpEngine {
 
 impl UdpEngine {
     pub fn new(port: u16) -> Self {
-        let bind_addr = format!("0.0.0.0:{}", port).parse().expect("Invalid IP or Port");
+        let bind_addr = format!("0.0.0.0:{}", port)
+            .parse()
+            .expect("Invalid IP or Port");
         Self { bind_addr }
     }
 
@@ -33,13 +35,16 @@ impl UdpEngine {
         let consumer_handle = thread::spawn(move || {
             core_affinity::set_for_current(tx_core);
             println!("Consumer attached to core {}", tx_core.id);
-            
+
             let mut processed = 0u64;
             loop {
                 if let Some(_packet) = consumer_buffer.pop() {
                     processed += 1;
-                    if processed % 5_000_000 == 0 {
-                        println!("Consumer processed {} millions packets", processed / 1_000_000);
+                    if processed.is_multiple_of(5_000_000) {
+                        println!(
+                            "Consumer processed {} millions packets",
+                            processed / 1_000_000
+                        );
                     }
                 }
             }
@@ -47,15 +52,15 @@ impl UdpEngine {
         handles.push(consumer_handle);
 
         let bind_addr = self.bind_addr;
-        let socket = net::bind_reuseport_socket(bind_addr)
-            .expect("Failed to create SO_REUSEPORT socket");
-        
+        let socket =
+            net::bind_reuseport_socket(bind_addr).expect("Failed to create SO_REUSEPORT socket");
+
         println!("Receiver attached to core {}", rx_core.id);
         let producer_handle = worker::start_worker(0, rx_core, socket, ring_buffer);
         handles.push(producer_handle);
 
         for handle in handles {
-             handle.join().unwrap();
+            handle.join().unwrap();
         }
     }
 }
