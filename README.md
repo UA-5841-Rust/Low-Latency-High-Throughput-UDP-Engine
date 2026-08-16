@@ -1,141 +1,81 @@
-# Topics:
-* Building projects (GCC/Clang, Makefiles).
-* Debugging with `gdb`.
-* Performance profiling (`perf`, `gprof`, `Hotspot`).
-* Binding to CPU cores (`taskset`, `isolcpus`) and NUMA architecture.
+# Low-Latency, High-Throughput UDP Engine
 
+Linux-only Rust UDP engine for the practical tasks: a high-load server plus a
+low-level batched architecture. It uses no Tokio/Actix and has no mutex on the
+packet execution path. The Linux ABI bindings are deliberately minimal and
+in-tree, so the project builds without downloading crates.
 
-# Practical task 1:
-* Write a high-load UDP server in Rust/C.
-* Perform load profiling using `perf record`, build a FlameGraph in `Hotspot`, and optimize the server by binding threads to isolated cores (`taskset`).
+## Design
 
-# Practical task 2: Building a High-Throughput Low-Latency UDP Engine in Rust
+Each receiver owns its own UDP socket bound to the same IP/port with
+`SO_REUSEPORT`; there is no shared `UdpSocket`. The kernel distributes flows
+between sockets. A receiver is pinned to a CPU, receives up to 64 datagrams per
+`recvmmsg` syscall into startup-allocated buffers, performs an allocation-free
+checksum, and publishes `PacketMeta` records to exactly one consumer through a
+bounded lock-free SPSC ring. The paired consumer is pinned to its own CPU and
+records an allocation-free logarithmic latency histogram.
 
-**Topic:** Low-level network stack optimization, Linux system calls, Zero-Allocation, Lock-Free architecture, and system profiling.
+`head`, `tail`, and per-worker atomic statistics are 64-byte aligned to prevent
+false sharing. If a consumer cannot keep up, the receiver drops metadata rather
+than blocking, and reports the drop count.
 
+## Build
 
-**Stack:** Rust, Linux Kernel API (`libc` / `io_uring`), `perf`, `Hotspot`, `sysctl`
-
----
-
-## Objective
-
-Design and build a high-performance UDP server in Rust capable of processing **5,000,000 to 10,000,000+ packets per second (PPS)** on a single port with a $p_{99.9}$ latency of $< 50\ \mu\text{s}$ without relying on high-level asynchronous frameworks (such as Tokio or Actix).
-
-> **Why this matters:** The standard `Arc<UdpSocket>` + `recvfrom` approach creates heavy socket mutex contention inside the Linux kernel and generates millions of individual system calls, leading to extreme CPU context-switching overhead.
-
----
-
-## 1. Architectural & Technical Requirements
-
-### 1.1. Eliminating Kernel Contention (`SO_REUSEPORT`)
-
-* Sharing a single socket across threads is strictly prohibited.
-* Each worker thread must create and bind its **own UDP socket** to the same IP/Port using the `SO_REUSEPORT` socket option.
-* The Linux kernel will distribute incoming traffic via 4-tuple hashing (`src_ip`, `src_port`, `dst_ip`, `dst_port`) without inter-thread locks.
-
-### 1.2. System Call Batching (`recvmmsg` / `io_uring`)
-
-* Issuing single `recvfrom` system calls is prohibited.
-* Implement packet reading in batches (32–64 packets per syscall):
-* **Option A:** Direct `libc::recvmmsg` system calls.
-* **Option B:** Asynchronous packet batching via **`io_uring`** (using low-level `io-uring` bindings).
-
-
-
-### 1.3. Memory & Cache Management (Zero-Allocation)
-
-* **Zero-Allocation in the hot path:** Dynamic heap allocations (`Box::new`, `Vec::push`, `String`) during packet processing are forbidden. All buffers must be pre-allocated at application startup.
-* **Cache Line Alignment:**
-* Per-thread data structures must be aligned to CPU cache line boundaries (`#[repr(align(64))]`).
-* Atomic counters owned by different threads must not share a cache line to prevent *Cache Line Bouncing (False Sharing)*.
-
-
-
-### 1.4. Lock-Free Inter-Thread Communication
-
-* Receiver threads pass processed packets to worker threads via a **Lock-Free SPSC (Single Producer Single Consumer)** ring buffer.
-* Using `std::sync::Mutex` or `std::sync::RwLock` on the execution path is forbidden.
-
----
-
-## 2. Test Environment Setup
-
-To achieve maximum throughput, the Linux kernel network stack must be tuned. Include a `setup_env.sh` script in your repository:
+Requires a Linux host with Rust stable and a kernel providing `recvmmsg` and
+`SO_REUSEPORT` (modern Linux). Windows builds expose a clear unsupported-platform
+message; benchmark results must be collected on Linux.
 
 ```bash
-#!/bin/bash
-# 1. Increase Linux kernel socket buffer sizes
-sudo sysctl -w net.core.rmem_max=134217728
-sudo sysctl -w net.core.rmem_default=67108864
-sudo sysctl -w net.core.netdev_max_backlog=250000
-
-# 2. Enable SO_BUSY_POLL (reduces network card interrupt latency)
-sudo sysctl -w net.core.busy_read=50
-sudo sysctl -w net.core.busy_poll=50
-
-# 3. Pin processes to specific CPU cores upon launch
-# (Isolate cores using isolcpus in the GRUB bootloader if needed)
-
+cargo test
+RUSTFLAGS="-C target-cpu=native -C force-frame-pointers=yes" cargo build --release
+chmod +x scripts/*.sh
+sudo ./scripts/setup_env.sh
 ```
 
----
+## Run
 
-## 3. Metrics & Profiling
+Reserve two logical CPUs per `--workers`: one receiver and one consumer.
 
-Project results must be verified and benchmarked using Linux system utilities.
-
-1. **Latency Percentiles:**
-* Record processing latencies: $p_{50}$, $p_{90}$, $p_{99}$, $p_{99.9}$, and Maximum (use `hdrhistogram` or a custom lock-free histogram).
-
-
-2. **Hardware Event Analysis (`perf stat`):**
-* Measure CPU performance counters:
-* `L1-dcache-load-misses`
-* `LLC-load-misses` (Last Level Cache)
-* `context-switches` (should approach 0 after CPU pinning)
-
-
-
-
-3. **Visualization (`Hotspot`):**
-* Generate and submit two FlameGraphs in your report (before and after optimization):
 ```bash
-RUSTFLAGS="-C force-frame-pointers=yes" cargo build --release
-sudo perf record -F 99 -g -p $(pgrep udp_engine) -- sleep 20
-hotspot perf.data
+# 2 receiver/consumer pairs on CPUs 2-5, port 9000
+./scripts/run_pinned.sh 2 2 9000
 
+# Or without taskset (the program still calls sched_setaffinity):
+./target/release/udp_engine --bind 0.0.0.0 --port 9000 --workers 2 --cpu 2
 ```
 
+`SO_REUSEPORT` hashes flows, so load testing needs multiple generator sockets
+(the `--threads` option does this). Prefer a separate generator host/NIC over
+loopback for representative throughput.
 
+```bash
+./scripts/load_test.sh 192.0.2.10 9000 8 30
+```
 
+Server output reports instantaneous PPS, approximate p50/p90/p99/p99.9 queue
+latencies and drops each second. The histogram is log2-bucketed: it is
+allocation-free and intentionally approximate; use a calibrated external probe
+when strict end-to-end latency precision is needed.
 
+## Profiling
 
----
+Run the engine and load generator, then in another terminal:
 
-## Grading Rubric
+```bash
+sudo ./scripts/profile.sh "$(pgrep -n udp_engine)" 20
+hotspot flamegraphs/perf.data
+```
 
-| Criterion | Requirements |
-| --- | --- |
-| **`SO_REUSEPORT` + CPU Pinning** | Each thread owns a distinct socket queue and is strictly pinned to a dedicated core via `core_affinity` or `taskset`. |
-| **Syscall Batching (`recvmmsg` / `io_uring`)** | Packets are read in batches, minimizing system call overhead. |
-| **Zero-Allocation & Alignment** | No heap allocations in the hot loop; proper usage of `#[repr(align(64))]`. |
-| **Lock-Free SPSC Ring Buffer** | Inter-thread data passing without OS mutexes or spinlocks. |
-| **Profiling & Performance Report** | Comprehensive report featuring $p_{99.9}$ latencies, `perf stat` comparisons, and FlameGraphs from `Hotspot`. |
+For the before/after comparison, keep a baseline implementation/measurement
+outside the optimized binary and record it with the same generator, packet size,
+duration, CPU isolation and kernel settings. Store counters and Hotspot exports
+in [PERFORMANCE_REPORT.md](PERFORMANCE_REPORT.md).
 
----
+## Safety and limits
 
-## Bonus
-
-* **SIMD Parsing:** Implement SIMD-accelerated header validation or checksum calculation (CRC32) using `AVX2` or `NEON` instructions.
-* **eBPF/XDP:** Write a basic XDP program to filter out malformed UDP packets directly at the network driver level (before entering the Linux network stack).
-
----
-
-## Submission Requirements
-
-1. **Source Code:** Link to a public or private GitHub repository.
-2. **Documentation (`README.md`):**
-* Build and execution instructions.
-* Traffic generation and benchmarking scripts.
-* A **"Performance Report"** section containing PPS/Latency tables, FlameGraph screenshots, and cache-miss analysis.
+The supplied sysctl script changes running kernel parameters and needs `sudo`.
+CPU isolation (`isolcpus`, `nohz_full`, `rcu_nocbs`) is a bootloader policy and
+is intentionally not changed automatically. The advertised PPS/latency targets
+depend on hardware, NIC queues, IRQ/RPS placement, packet size and traffic flow;
+they must be demonstrated with the supplied profiling workflow rather than
+assumed from the code.
