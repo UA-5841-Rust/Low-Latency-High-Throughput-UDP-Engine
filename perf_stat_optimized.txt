@@ -1,0 +1,15 @@
+
+ Performance counter stats for process id '5562':
+
+      345460220388      cycles                                                                
+      226966593526      instructions                     #    0.66  insn per cycle            
+           7922318      cache-references                                                      
+            885579      cache-misses                     #   11.18% of all cache refs         
+       57105936096      L1-dcache-loads                                                       
+           6603401      L1-dcache-load-misses            #    0.01% of all L1-dcache accesses 
+   <not supported>      LLC-loads                                                             
+   <not supported>      LLC-load-misses                                                       
+                57      context-switches                                                      
+
+      20.008124423 seconds time elapsed
+
