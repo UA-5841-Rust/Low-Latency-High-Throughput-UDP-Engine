@@ -1,0 +1,287 @@
+binding 127.0.0.1:8080: 2 receiver/worker pair(s), 4 core(s) available
+[rx core 0] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] recv=0 sent=0 dropped(ring full)=0 dropped(send full)=0
+[wx core 1] processed=2 dropped(ring full)=0
+[wx core 3] processed=2 dropped(ring full)=0
+[rx core 0] recv=8562 sent=8562 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 8562 pkts | Latency: p50=6.84µs p99=139.78µs p99.9=451.07µs max=587.26µs
+[rx core 2] recv=7047 sent=7047 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 7047 pkts | Latency: p50=11.72µs p99=2105.34µs p99.9=3594.24µs max=3659.78µs
+[wx core 1] processed=44595 dropped(ring full)=0
+[wx core 3] processed=47840 dropped(ring full)=0
+[rx core 0] recv=51599 sent=51599 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 43037 pkts | Latency: p50=5.91µs p99=764.41µs p99.9=1011.71µs max=1046.53µs
+[rx core 2] recv=59556 sent=59556 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 52509 pkts | Latency: p50=8.81µs p99=1852.41µs p99.9=4337.66µs max=5242.88µs
+[wx core 1] processed=87131 dropped(ring full)=0
+[wx core 3] processed=92611 dropped(ring full)=0
+[rx core 0] recv=94275 sent=94275 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 42676 pkts | Latency: p50=17.21µs p99=4050.94µs p99.9=7376.90µs max=8187.90µs
+[rx core 2] recv=102517 sent=102516 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 42960 pkts | Latency: p50=6.01µs p99=1520.64µs p99.9=4501.50µs max=5451.77µs
+[wx core 1] processed=126894 dropped(ring full)=0
+[wx core 3] processed=133301 dropped(ring full)=0
+[rx core 0] recv=134508 sent=134499 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 40224 pkts | Latency: p50=12.97µs p99=1970.17µs p99.9=3190.78µs max=3852.29µs
+[rx core 2] recv=144729 sent=144729 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 42213 pkts | Latency: p50=9.02µs p99=2336.77µs p99.9=4644.86µs max=10977.28µs
+[wx core 1] processed=167893 dropped(ring full)=0
+[wx core 3] processed=175889 dropped(ring full)=0
+[rx core 0] recv=175867 sent=175867 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 41368 pkts | Latency: p50=7.67µs p99=2168.83µs p99.9=3584.00µs max=5517.31µs
+[rx core 2] recv=188075 sent=188075 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 43346 pkts | Latency: p50=8.29µs p99=4018.18µs p99.9=6172.67µs max=6811.65µs
+[wx core 1] processed=211264 dropped(ring full)=0
+[wx core 3] processed=220241 dropped(ring full)=0
+[rx core 0] recv=218461 sent=218460 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 42593 pkts | Latency: p50=7.26µs p99=1572.86µs p99.9=2613.25µs max=3436.54µs
+[rx core 2] recv=231121 sent=231121 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 43046 pkts | Latency: p50=7.05µs p99=2658.30µs p99.9=3553.28µs max=4571.14µs
+[wx core 1] processed=252046 dropped(ring full)=0
+[wx core 3] processed=263325 dropped(ring full)=0
+[rx core 0] recv=259969 sent=259969 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 41509 pkts | Latency: p50=13.69µs p99=2803.71µs p99.9=4476.93µs max=5349.38µs
+[rx core 2] recv=274597 sent=274597 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 43476 pkts | Latency: p50=10.06µs p99=2899.97µs p99.9=4190.21µs max=13746.17µs
+[wx core 1] processed=294317 dropped(ring full)=0
+[wx core 3] processed=308146 dropped(ring full)=0
+[rx core 0] recv=303992 sent=303992 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 44023 pkts | Latency: p50=10.06µs p99=4016.13µs p99.9=7925.76µs max=8945.66µs
+[rx core 2] recv=318990 sent=318990 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 44393 pkts | Latency: p50=14.21µs p99=3317.76µs p99.9=8351.74µs max=27770.88µs
+[wx core 1] processed=340177 dropped(ring full)=0
+[wx core 3] processed=354176 dropped(ring full)=0
+[rx core 0] recv=349029 sent=349029 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 45037 pkts | Latency: p50=10.48µs p99=4040.70µs p99.9=7696.38µs max=8208.38µs
+[rx core 2] recv=368192 sent=368192 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 49202 pkts | Latency: p50=6.54µs p99=5480.45µs p99.9=7651.33µs max=7651.33µs
+[wx core 1] processed=387097 dropped(ring full)=0
+[wx core 3] processed=401587 dropped(ring full)=0
+[rx core 0] recv=396760 sent=396760 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 47731 pkts | Latency: p50=7.16µs p99=1945.60µs p99.9=3278.85µs max=3403.78µs
+[rx core 2] recv=416606 sent=416606 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48414 pkts | Latency: p50=10.58µs p99=22020.10µs p99.9=28491.78µs max=28491.78µs
+[wx core 1] processed=434396 dropped(ring full)=0
+[wx core 3] processed=449596 dropped(ring full)=0
+[rx core 0] recv=443471 sent=443471 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 46711 pkts | Latency: p50=12.13µs p99=3368.96µs p99.9=7266.30µs max=7757.82µs
+[rx core 2] recv=463880 sent=463852 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 47246 pkts | Latency: p50=8.40µs p99=537.60µs p99.9=1019.90µs max=2357.25µs
+[wx core 1] processed=482052 dropped(ring full)=0
+[wx core 3] processed=494519 dropped(ring full)=0
+[rx core 0] recv=491130 sent=491130 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 47659 pkts | Latency: p50=10.89µs p99=1445.89µs p99.9=2115.58µs max=2990.08µs
+[rx core 2] recv=509476 sent=509476 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 45624 pkts | Latency: p50=8.19µs p99=1826.82µs p99.9=3987.45µs max=6844.41µs
+[wx core 1] processed=526689 dropped(ring full)=0
+[wx core 3] processed=542299 dropped(ring full)=0
+[rx core 0] recv=537527 sent=537527 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 46397 pkts | Latency: p50=11.30µs p99=3553.28µs p99.9=5820.41µs max=6193.15µs
+[rx core 2] recv=558317 sent=558317 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48841 pkts | Latency: p50=16.50µs p99=3934.21µs p99.9=7622.65µs max=8019.97µs
+[wx core 1] processed=576078 dropped(ring full)=0
+[wx core 3] processed=590553 dropped(ring full)=0
+[rx core 0] recv=587073 sent=587073 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 49546 pkts | Latency: p50=13.48µs p99=2732.03µs p99.9=9355.26µs max=9355.26µs
+[rx core 2] recv=604360 sent=604360 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 46043 pkts | Latency: p50=7.46µs p99=2873.34µs p99.9=4603.90µs max=22102.01µs
+[wx core 1] processed=622295 dropped(ring full)=0
+[wx core 3] processed=637286 dropped(ring full)=0
+[rx core 0] recv=630943 sent=630943 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 43870 pkts | Latency: p50=13.79µs p99=18022.40µs p99.9=19972.10µs max=20840.45µs
+[rx core 2] recv=653227 sent=653227 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48867 pkts | Latency: p50=8.19µs p99=11509.76µs p99.9=15130.62µs max=16113.66µs
+[wx core 1] processed=662077 dropped(ring full)=0
+[wx core 3] processed=684881 dropped(ring full)=0
+[rx core 0] recv=670826 sent=670826 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 39883 pkts | Latency: p50=17.12µs p99=18186.24µs p99.9=21446.65µs max=21446.65µs
+[rx core 2] recv=701501 sent=701501 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48274 pkts | Latency: p50=15.34µs p99=12066.82µs p99.9=14811.14µs max=15007.74µs
+[wx core 1] processed=702515 dropped(ring full)=0
+[wx core 3] processed=735215 dropped(ring full)=0
+[rx core 0] recv=712183 sent=712183 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 41357 pkts | Latency: p50=13.06µs p99=1918.97µs p99.9=3745.79µs max=3745.79µs
+[rx core 2] recv=750472 sent=749918 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48417 pkts | Latency: p50=9.23µs p99=23216.13µs p99.9=30179.33µs max=31539.20µs
+[wx core 1] processed=750009 dropped(ring full)=0
+[wx core 3] processed=782866 dropped(ring full)=0
+[rx core 0] recv=758168 sent=758168 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 45985 pkts | Latency: p50=11.51µs p99=1906.69µs p99.9=4382.72µs max=19808.26µs
+[rx core 2] recv=800991 sent=800991 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 51073 pkts | Latency: p50=6.32µs p99=20922.37µs p99.9=41451.52µs max=42598.40µs
+[wx core 1] processed=793626 dropped(ring full)=0
+[wx core 3] processed=833418 dropped(ring full)=0
+[rx core 0] recv=803334 sent=803334 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 45166 pkts | Latency: p50=6.22µs p99=4653.06µs p99.9=10641.41µs max=11526.14µs
+[rx core 2] recv=850378 sent=848899 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 47908 pkts | Latency: p50=6.95µs p99=24313.85µs p99.9=34603.01µs max=35848.19µs
+[wx core 1] processed=837972 dropped(ring full)=0
+[wx core 3] processed=881211 dropped(ring full)=0
+[rx core 0] recv=847513 sent=847508 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 44174 pkts | Latency: p50=9.23µs p99=2570.24µs p99.9=5963.77µs max=5963.77µs
+[rx core 2] recv=897580 sent=897579 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48680 pkts | Latency: p50=6.84µs p99=12312.58µs p99.9=14147.58µs max=14876.67µs
+[wx core 1] processed=882739 dropped(ring full)=0
+[wx core 3] processed=928079 dropped(ring full)=0
+[rx core 0] recv=893952 sent=893952 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 46444 pkts | Latency: p50=6.32µs p99=1157.12µs p99.9=2412.54µs max=3086.34µs
+[rx core 2] recv=944887 sent=944887 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 47308 pkts | Latency: p50=6.53µs p99=17334.27µs p99.9=24068.10µs max=25182.21µs
+[wx core 1] processed=927142 dropped(ring full)=0
+[wx core 3] processed=977637 dropped(ring full)=0
+[rx core 0] recv=936475 sent=936474 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 42522 pkts | Latency: p50=11.41µs p99=4132.86µs p99.9=9830.40µs max=10452.99µs
+[rx core 2] recv=996794 sent=996794 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 51907 pkts | Latency: p50=8.50µs p99=18284.54µs p99.9=27951.10µs max=28835.84µs
+[wx core 1] processed=971616 dropped(ring full)=0
+[wx core 3] processed=1030526 dropped(ring full)=0
+[rx core 0] recv=980648 sent=980648 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 44174 pkts | Latency: p50=7.05µs p99=1719.30µs p99.9=2795.52µs max=3153.92µs
+[rx core 2] recv=1048846 sent=1048846 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 52052 pkts | Latency: p50=19.30µs p99=29802.49µs p99.9=39485.44µs max=40665.09µs
+[wx core 1] processed=1010760 dropped(ring full)=0
+[wx core 3] processed=1083009 dropped(ring full)=0
+[rx core 0] recv=1021003 sent=1021003 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 40355 pkts | Latency: p50=17.95µs p99=3252.22µs p99.9=5181.44µs max=5427.20µs
+[rx core 2] recv=1102177 sent=1102177 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 53331 pkts | Latency: p50=8.19µs p99=2596.86µs p99.9=4681.73µs max=5406.72µs
+[wx core 1] processed=1057984 dropped(ring full)=0
+[wx core 3] processed=1132856 dropped(ring full)=0
+[rx core 0] recv=1069283 sent=1069272 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 48269 pkts | Latency: p50=16.70µs p99=2877.44µs p99.9=6365.18µs max=7553.02µs
+[rx core 2] recv=1150403 sent=1150403 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48226 pkts | Latency: p50=10.27µs p99=20054.01µs p99.9=22183.94µs max=22216.70µs
+[wx core 1] processed=1105654 dropped(ring full)=0
+[wx core 3] processed=1177311 dropped(ring full)=0
+[rx core 0] recv=1117396 sent=1117396 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 48124 pkts | Latency: p50=15.86µs p99=2623.49µs p99.9=5066.75µs max=10010.62µs
+[rx core 2] recv=1195549 sent=1195549 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 45146 pkts | Latency: p50=8.29µs p99=7901.18µs p99.9=9912.32µs max=10231.81µs
+[wx core 1] processed=1154759 dropped(ring full)=0
+[wx core 3] processed=1224120 dropped(ring full)=0
+[rx core 0] recv=1166688 sent=1166687 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 49291 pkts | Latency: p50=38.17µs p99=3616.77µs p99.9=4800.51µs max=6459.39µs
+[rx core 2] recv=1246547 sent=1246547 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 50998 pkts | Latency: p50=20.34µs p99=15917.06µs p99.9=23298.05µs max=24494.08µs
+[wx core 1] processed=1201141 dropped(ring full)=0
+[wx core 3] processed=1271932 dropped(ring full)=0
+[rx core 0] recv=1212560 sent=1212560 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 45873 pkts | Latency: p50=9.75µs p99=1049.60µs p99.9=2740.22µs max=2740.22µs
+[rx core 2] recv=1294988 sent=1294988 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 48441 pkts | Latency: p50=9.13µs p99=7966.72µs p99.9=14278.66µs max=113180.67µs
+[wx core 1] processed=1241492 dropped(ring full)=0
+[wx core 3] processed=1324326 dropped(ring full)=0
+[rx core 0] recv=1254329 sent=1254324 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 41764 pkts | Latency: p50=6.64µs p99=257.66µs p99.9=817.66µs max=1229.82µs
+[rx core 2] recv=1346364 sent=1346364 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 51376 pkts | Latency: p50=8.81µs p99=11354.11µs p99.9=18776.06µs max=19464.19µs
+[wx core 1] processed=1293099 dropped(ring full)=0
+[wx core 3] processed=1371723 dropped(ring full)=0
+[rx core 0] recv=1306172 sent=1306162 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 51838 pkts | Latency: p50=7.36µs p99=1411.07µs p99.9=3082.24µs max=3481.60µs
+[rx core 2] recv=1393940 sent=1393940 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 47576 pkts | Latency: p50=12.03µs p99=16826.37µs p99.9=27459.58µs max=31145.98µs
+[wx core 1] processed=1341704 dropped(ring full)=0
+[wx core 3] processed=1417866 dropped(ring full)=0
+[rx core 0] recv=1355008 sent=1355008 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 48846 pkts | Latency: p50=15.04µs p99=2134.01µs p99.9=3854.34µs max=4153.34µs
+[rx core 2] recv=1437486 sent=1437486 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 43546 pkts | Latency: p50=10.89µs p99=15761.41µs p99.9=21004.29µs max=22069.25µs
+[wx core 1] processed=1387906 dropped(ring full)=0
+[wx core 3] processed=1465806 dropped(ring full)=0
+[rx core 0] recv=1399135 sent=1399135 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 44127 pkts | Latency: p50=18.05µs p99=3069.95µs p99.9=5804.03µs max=5804.03µs
+[rx core 2] recv=1488579 sent=1488579 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 51093 pkts | Latency: p50=10.38µs p99=21495.81µs p99.9=28459.01µs max=29933.57µs
+[wx core 1] processed=1431985 dropped(ring full)=0
+[wx core 3] processed=1514655 dropped(ring full)=0
+[rx core 0] recv=1443470 sent=1443470 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 44335 pkts | Latency: p50=14.73µs p99=2869.25µs p99.9=8151.04µs max=8798.21µs
+[rx core 2] recv=1534756 sent=1534756 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 46177 pkts | Latency: p50=10.38µs p99=23248.90µs p99.9=28065.79µs max=28655.62µs
+[wx core 1] processed=1475987 dropped(ring full)=0
+[wx core 3] processed=1560115 dropped(ring full)=0
+[rx core 0] recv=1487449 sent=1487308 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 43838 pkts | Latency: p50=22.82µs p99=2318.34µs p99.9=3610.62µs max=8011.77µs
+[rx core 2] recv=1578882 sent=1578882 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 44126 pkts | Latency: p50=18.56µs p99=4081.66µs p99.9=7892.99µs max=43581.44µs
+[wx core 1] processed=1515270 dropped(ring full)=0
+[wx core 3] processed=1603427 dropped(ring full)=0
+[rx core 0] recv=1526383 sent=1526383 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 39075 pkts | Latency: p50=84.35µs p99=32882.69µs p99.9=33456.13µs max=33456.13µs
+[rx core 2] recv=1625359 sent=1625359 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 46477 pkts | Latency: p50=93.76µs p99=39321.60µs p99.9=39747.58µs max=39878.65µs
+[wx core 1] processed=1555182 dropped(ring full)=0
+[wx core 3] processed=1644697 dropped(ring full)=0
+[rx core 0] recv=1567336 sent=1567336 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 40953 pkts | Latency: p50=84.09µs p99=72220.67µs p99.9=72876.03µs max=72876.03µs
+[rx core 2] recv=1668418 sent=1668412 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 43053 pkts | Latency: p50=46.98µs p99=16736.26µs p99.9=18776.06µs max=20217.85µs
+[wx core 1] processed=1595982 dropped(ring full)=0
+[wx core 3] processed=1687385 dropped(ring full)=0
+[rx core 0] recv=1607741 sent=1607741 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 40405 pkts | Latency: p50=127.49µs p99=10076.16µs p99.9=12541.95µs max=13344.77µs
+[rx core 2] recv=1710019 sent=1710019 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 41607 pkts | Latency: p50=51.74µs p99=24035.33µs p99.9=30359.55µs max=31719.42µs
+[wx core 3] processed=1728869 dropped(ring full)=0
+[wx core 1] processed=1637500 dropped(ring full)=0
+[rx core 0] recv=1649185 sent=1648865 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 41124 pkts | Latency: p50=1712.13µs p99=51216.38µs p99.9=51314.69µs max=51314.69µs
+[rx core 2] recv=1751539 sent=1751539 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 41520 pkts | Latency: p50=221.44µs p99=16359.42µs p99.9=18776.06µs max=24690.69µs
+[wx core 3] processed=1770388 dropped(ring full)=0
+[wx core 1] processed=1678668 dropped(ring full)=0
+[rx core 0] recv=1690086 sent=1690086 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 41221 pkts | Latency: p50=144.64µs p99=35553.28µs p99.9=47185.92µs max=47316.99µs
+[rx core 2] recv=1796807 sent=1796807 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 45268 pkts | Latency: p50=49.98µs p99=20054.01µs p99.9=33177.60µs max=33406.97µs
+[wx core 3] processed=1818384 dropped(ring full)=0
+[wx core 1] processed=1721456 dropped(ring full)=0
+[rx core 0] recv=1733526 sent=1733526 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 43440 pkts | Latency: p50=8.29µs p99=3727.36µs p99.9=5521.41µs max=7675.90µs
+[rx core 2] recv=1841340 sent=1841339 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 44532 pkts | Latency: p50=11.62µs p99=22052.86µs p99.9=23904.26µs max=24608.77µs
+[wx core 3] processed=1862544 dropped(ring full)=0
+[wx core 1] processed=1768421 dropped(ring full)=0
+[rx core 0] recv=1780701 sent=1780701 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 47175 pkts | Latency: p50=11.30µs p99=2121.73µs p99.9=4997.12µs max=4997.12µs
+[rx core 2] recv=1887811 sent=1887811 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 46472 pkts | Latency: p50=7.36µs p99=3571.71µs p99.9=9060.35µs max=9510.91µs
+[wx core 3] processed=1908143 dropped(ring full)=0
+[wx core 1] processed=1814465 dropped(ring full)=0
+[rx core 0] recv=1827592 sent=1827592 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 46891 pkts | Latency: p50=8.19µs p99=821.76µs p99.9=2916.35µs max=3993.60µs
+[rx core 2] recv=1932958 sent=1932616 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 44805 pkts | Latency: p50=6.22µs p99=3737.60µs p99.9=6787.07µs max=6787.07µs
+[wx core 3] processed=1950527 dropped(ring full)=0
+[wx core 1] processed=1857062 dropped(ring full)=0
+[rx core 0] recv=1867022 sent=1867022 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 39430 pkts | Latency: p50=13.89µs p99=12148.74µs p99.9=20447.23µs max=21233.66µs
+[rx core 2] recv=1971298 sent=1971298 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 38682 pkts | Latency: p50=10.57µs p99=8044.54µs p99.9=13295.61µs max=14155.77µs
+[wx core 3] processed=1988288 dropped(ring full)=0
+[wx core 1] processed=1896249 dropped(ring full)=0
+[rx core 0] recv=1906138 sent=1906138 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 39116 pkts | Latency: p50=223.74µs p99=14295.04µs p99.9=18137.09µs max=18546.69µs
+[rx core 2] recv=2009521 sent=2009480 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 38182 pkts | Latency: p50=40.86µs p99=5533.69µs p99.9=18694.14µs max=18694.14µs
+[wx core 3] processed=2026373 dropped(ring full)=0
+[wx core 1] processed=1935918 dropped(ring full)=0
+[rx core 0] recv=1946199 sent=1946196 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 40058 pkts | Latency: p50=40.03µs p99=18513.92µs p99.9=32636.93µs max=32636.93µs
+[rx core 2] recv=2047659 sent=2047659 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 38179 pkts | Latency: p50=8.61µs p99=7573.50µs p99.9=11051.01µs max=11051.01µs
+[wx core 3] processed=2064415 dropped(ring full)=0
+[wx core 1] processed=1974090 dropped(ring full)=0
+[rx core 0] recv=1985049 sent=1985049 dropped(ring full)=0 dropped(send full)=0
+[rx core 0] 38853 pkts | Latency: p50=17.21µs p99=4427.77µs p99.9=5865.47µs max=8536.06µs
+[rx core 2] recv=2085664 sent=2085660 dropped(ring full)=0 dropped(send full)=0
+[rx core 2] 38001 pkts | Latency: p50=11.20µs p99=7491.58µs p99.9=12918.78µs max=13787.14µs
+[wx core 3] processed=2102623 dropped(ring full)=0
+[wx core 1] processed=2012835 dropped(ring full)=0
