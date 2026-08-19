@@ -1,0 +1,11 @@
+# started on Wed Aug 19 09:26:08 2026
+
+
+ Performance counter stats for process id '31711':
+
+         685440756      L1-dcache-load-misses                                                 
+   <not supported>      LLC-load-misses                                                       
+               362      cs                                                                    
+
+      10.011499281 seconds time elapsed
+
