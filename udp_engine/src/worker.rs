@@ -37,7 +37,7 @@ impl SpscQueue {
 
         unsafe {
             let buf = self.buffer.get();
-            (*buf)[head] = *packet;
+            std::ptr::write(&mut (*buf)[head], packet.clone());
         }
 
         self.head.store(next_head, Ordering::Release);
@@ -53,7 +53,7 @@ impl SpscQueue {
 
         let packet = unsafe {
             let buf = self.buffer.get();
-            (*buf)[tail]
+            std::ptr::read(&(*buf)[tail])
         };
 
         self.tail.store((tail + 1) % RING_SIZE, Ordering::Release);

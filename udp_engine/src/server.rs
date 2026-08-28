@@ -1,5 +1,6 @@
 use std::os::unix::io::RawFd;
 use std::mem;
+use std::time::Instant;
 
 pub fn create_reuseport_socket(port: u16) -> RawFd {
     unsafe {
@@ -44,10 +45,11 @@ pub const BATCH_SIZE: usize = 64;
 pub const PACKET_SIZE: usize = 2048;
 
 #[repr(align(64))]
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub struct Packet {
     pub buffer: [u8; PACKET_SIZE],
     pub len: usize,
+    pub timestamp: Instant,
 }
 
 #[repr(align(64))]
@@ -85,10 +87,19 @@ pub fn receive_batch(fd: RawFd, ctx: &mut ReceiveContext) -> usize {
 
     if res > 0 {
         let count = res as usize;
+        let now = Instant::now();
         for i in 0..count {
             ctx.packets[i].len = ctx.msgs[i].msg_len as usize;
+            ctx.packets[i].timestamp = now;
         }
         count
+    } else if res < 0 {
+        let err = std::io::Error::last_os_error();
+        let raw = err.raw_os_error();
+        if raw != Some(libc::EAGAIN) && raw != Some(libc::EINTR) {
+            eprintln!("recvmmsg error: {}", err);
+        }
+        0
     } else {
         0
     }
